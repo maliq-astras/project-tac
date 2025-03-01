@@ -1,0 +1,95 @@
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 10px;
+  margin: 2rem;
+  perspective: 1000px;
+  position: relative;
+  width: 320px;
+  height: 320px;
+}
+
+.winning-line {
+  position: absolute;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.winning-line.horizontal {
+  height: 8px;
+  width: 98%;
+  left: 1%;
+  border-radius: 5px;
+  transform-origin: left center;
+  animation: drawHorizontal 0.5s ease-out forwards;
+}
+
+.winning-line.vertical {
+  height: 98%;
+  width: 8px;
+  top: 1%;
+  border-radius: 5px;
+  transform-origin: top center;
+  animation: drawVertical 0.5s ease-out forwards;
+}
+
+.winning-line.diagonal {
+  width: 8px;
+  height: 130%;
+  top: -15%;
+  left: 50%;
+  border-radius: 5px;
+  animation: drawDiagonal 0.5s ease-out forwards;
+}
+
+/* Position horizontal lines */
+.winning-line.horizontal.line-0 { top: calc(50px - 4px); }
+.winning-line.horizontal.line-1 { top: calc(160px - 4px); }
+.winning-line.horizontal.line-2 { top: calc(270px - 4px); }
+
+/* Position vertical lines */
+.winning-line.vertical.line-0 { left: calc(50px - 4px); }
+.winning-line.vertical.line-1 { left: calc(160px - 4px); }
+.winning-line.vertical.line-2 { left: calc(270px - 4px); }
+
+/* Position diagonal lines */
+.winning-line.diagonal.line-0 {
+  transform: translateX(-50%) rotate(-45deg);
+  transform-origin: center center;
+}
+.winning-line.diagonal.line-1 {
+  transform: translateX(-50%) rotate(45deg);
+  transform-origin: center center;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Remove the game-board.draw .cell animation and add these instead */
+.game-board.draw .cell:nth-child(1) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.0s; }
+.game-board.draw .cell:nth-child(2) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.1s; }
+.game-board.draw .cell:nth-child(3) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.2s; }
+.game-board.draw .cell:nth-child(4) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.15s; }
+.game-board.draw .cell:nth-child(5) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.25s; }
+.game-board.draw .cell:nth-child(6) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.1s; }
+.game-board.draw .cell:nth-child(7) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.2s; }
+.game-board.draw .cell:nth-child(8) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.05s; }
+.game-board.draw .cell:nth-child(9) { animation: shake 0.5s ease-in-out infinite; animation-iteration-count: 20; animation-delay: 0.15s; }
+
+@keyframes drawHorizontal {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes drawVertical {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes drawDiagonal {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}

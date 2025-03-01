@@ -1,0 +1,258 @@
+body {
+  font-family: 'Comic Neue', cursive;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: var(--theme-background);
+  color: var(--theme-text);
+  transition: background-color 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.game-setup {
+  text-align: center;
+  background: rgba(255, 255, 255, 1);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.symbol-choice button {
+  margin: 10px;
+  padding: 10px 30px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  font-family: 'Finger Paint', cursive;
+}
+
+.symbol-choice button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.difficulty-choice button {
+  margin: 10px;
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  transition: all 0.2s ease;
+  font-family: 'Comic Neue', cursive;
+}
+
+.difficulty-choice button:hover {
+  background: #f0f0f0;
+}
+
+.difficulty-choice button[data-difficulty="impossible"] {
+  background: linear-gradient(45deg, #ff0000, #ff00ff);
+  color: white;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.difficulty-choice button[data-difficulty="impossible"]:hover {
+  background: linear-gradient(45deg, #ff00ff, #ff0000);
+}
+
+.start-button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-text-stroke: 1px rgba(0,0,0,0.1);
+  animation: letterSpacing 0.3s ease;
+  font-family: 'Comic Neue', cursive;
+}
+
+.start-button:hover {
+  transform: scale(1.05);
+  animation: buttonPulse 1.5s infinite;
+}
+
+/* Difficulty-specific styles for start button */
+.start-button.easy {
+  background: #4CAF50;
+  color: white;
+  text-shadow: 0 2px 4px rgba(76, 175, 80, 0.5),
+               0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.start-button.medium {
+  background: #2196F3;
+  color: white;
+  text-shadow: 0 2px 4px rgba(33, 150, 243, 0.5),
+               0 0 10px rgba(33, 150, 243, 0.3);
+}
+
+.start-button.hard {
+  background: #FF9800;
+  color: white;
+  text-shadow: 0 2px 4px rgba(255, 152, 0, 0.5),
+               0 0 10px rgba(255, 152, 0, 0.3);
+}
+
+.start-button.impossible {
+  background: linear-gradient(45deg, #ff0000, #ff00ff);
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.5),
+               0 0 20px rgba(255, 0, 255, 0.3),
+               0 0 30px rgba(255, 0, 255, 0.2);
+}
+
+/* Button pulse animation */
+@keyframes buttonPulse {
+  0% { transform: scale(1.05); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1.05); }
+}
+
+/* Special glow effect for impossible mode */
+@keyframes impossibleGlow {
+  from {
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.5),
+                 0 0 20px rgba(255, 0, 255, 0.3),
+                 0 0 30px rgba(255, 0, 255, 0.2);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(255, 0, 255, 0.6),
+                 0 0 30px rgba(255, 0, 255, 0.4),
+                 0 0 40px rgba(255, 0, 255, 0.3);
+  }
+}
+
+.game-over {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.reset-button {
+  padding: 12px 40px;
+  font-size: 1.2rem;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-family: 'Comic Neue', cursive;
+}
+
+.reset-button:hover {
+  background: #1976D2;
+}
+
+.symbol.x {
+  transform: translateZ(10px);
+}
+
+.symbol.o {
+  transform: translateZ(10px);
+}
+
+.cell:hover .symbol {
+  transform: translateZ(20px);
+}
+
+.falling-symbols {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+}
+
+.symbol-column {
+  position: absolute;
+  top: 0;
+  width: 10%;
+  height: 100%;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+.falling-symbols-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.falling-symbol {
+  position: absolute;
+  top: -50px;
+  width: 100%;
+  text-align: center;
+  opacity: 0.4;
+  font-family: 'Finger Paint', cursive;
+  font-size: 3rem;
+  font-weight: bold;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .game-container {
+    min-height: 150vh;
+    min-width: 150vw;
+  }
+
+  .falling-symbols-container {
+    display: none;
+  }
+
+}
+
+@media only screen and (max-height: 500px) {
+  .game-container {
+    min-height: 150vh;
+    min-width: 150vw;
+  }
+}
+
+@media only screen and (max-height: 350px) {
+  .game-container {
+    min-height: 200vh;
+    min-width: 200vw;
+  }
+}
