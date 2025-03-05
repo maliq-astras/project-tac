@@ -4,7 +4,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import { useTheme } from '../../context/ThemeContext';
 
-const DIFFICULTIES = ['easy', 'medium', 'hard', 'impossible'];
+const DIFFICULTIES = ['easy', 'medium', 'hard', 'impossible', 'endless'];
 
 const DifficultyPicker = ({ difficulty, setDifficulty }) => {
   const [slideDirection, setSlideDirection] = useState(null);
